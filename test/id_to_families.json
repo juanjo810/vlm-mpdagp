@@ -1,0 +1,264 @@
+{
+  "acordeao": [
+    "aerofone",
+    "palheta_livre",
+    "popular_global"
+  ],
+  "adufe": [
+    "membranofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "baixo": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "bandolim": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_europeu"
+  ],
+  "banjo": [
+    "cordofone",
+    "dedilhado",
+    "popular_global"
+  ],
+  "bateria": [
+    "membranofone",
+    "percussao"
+  ],
+  "bombo": [
+    "membranofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "braguinha": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "caixa": [
+    "membranofone",
+    "percussao"
+  ],
+  "cajon": [
+    "membranofone",
+    "percussao"
+  ],
+  "castanholas": [
+    "idiofone",
+    "percussao_tradicional"
+  ],
+  "cavaquinho": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "chocalhos": [
+    "idiofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "clarinete": [
+    "aerofone",
+    "palheta",
+    "orquestral"
+  ],
+  "concertina": [
+    "aerofone",
+    "palheta_livre",
+    "tradicional_portugues"
+  ],
+  "contrabaixo": [
+    "cordofone",
+    "arco",
+    "orquestral"
+  ],
+  "ferramentas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "ferrinhos": [
+    "idiofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "flauta": [
+    "aerofone",
+    "madeira"
+  ],
+  "gaita_de_beicos": [
+    "aerofone",
+    "livre"
+  ],
+  "gaita_de_foles": [
+    "aerofone",
+    "palheta",
+    "tradicional_portugues"
+  ],
+  "glockenspiel": [
+    "idiofone",
+    "lamelas",
+    "orquestral"
+  ],
+  "guitarra": [
+    "cordofone",
+    "dedilhado",
+    "popular_global"
+  ],
+  "guitarra_portuguesa": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "guizos": [
+    "idiofone",
+    "percussao_tradicional"
+  ],
+  "harmonica": [
+    "aerofone",
+    "livre"
+  ],
+  "mar": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "maracas": [
+    "idiofone",
+    "percussao"
+  ],
+  "melodica": [
+    "aerofone",
+    "palheta_livre",
+    "teclas"
+  ],
+  "mesa_mistura": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "metalofone": [
+    "idiofone",
+    "lamelas"
+  ],
+  "orgao": [
+    "aerofone",
+    "teclas"
+  ],
+  "ovo": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pandeireta": [
+    "membranofone",
+    "percussao_tradicional"
+  ],
+  "pau_de_chuva": [
+    "idiofone",
+    "percussao"
+  ],
+  "paus": [
+    "idiofone",
+    "percussao"
+  ],
+  "percussao_generica": [
+    "membranofone",
+    "idiofone",
+    "percussao"
+  ],
+  "pianola": [
+    "cordofone",
+    "percussao_teclas"
+  ],
+  "pinha": [
+    "idiofone",
+    "percussao"
+  ],
+  "pratos": [
+    "idiofone",
+    "percussao"
+  ],
+  "pifaro": [
+    "aerofone",
+    "madeira"
+  ],
+  "rajao": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "reco_reco": [
+    "idiofone",
+    "percussao"
+  ],
+  "sapatos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "shaker": [
+    "idiofone",
+    "percussao"
+  ],
+  "tambor": [
+    "membranofone",
+    "percussao"
+  ],
+  "tarola": [
+    "membranofone",
+    "percussao"
+  ],
+  "teclado": [
+    "eletronico",
+    "teclas"
+  ],
+  "triangulo": [
+    "idiofone",
+    "percussao"
+  ],
+  "ukulele": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "viola_generica": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "viola_amarantina": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_braguesa": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_campanica": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_da_terra": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_de_arame": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_toeira": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "violino": [
+    "cordofone",
+    "arco",
+    "orquestral"
+  ],
+  "varios": [
+    "outros"
+  ],
+  "voz" : []
+}
