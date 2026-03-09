@@ -307,17 +307,7 @@ Normalization map for type/category labels (e.g., narrative-song variants -> `mu
 
 ---
 
-## 7) Recommended improvements
-
-- Move hardcoded tokens and paths to environment variables or a `.env` file.
-- Add robust path/column validation in all scripts.
-- Expose prompts and paths via CLI arguments (especially in `test/`).
-- Add deterministic seeding and structured logging for better reproducibility.
-- Refactor/clean `test/test_unsloth.py` before operational use.
-
----
-
-## 8) Troubleshooting
+## 7) Troubleshooting
 
 - **`ModuleNotFoundError`**: install dependencies with `pip install -r requirements.txt`.
 - **Vimeo API errors**: verify access token and account permissions.
@@ -326,6 +316,6 @@ Normalization map for type/category labels (e.g., narrative-song variants -> `mu
 
 ---
 
-## 9) License and data usage
+## 8) License and data usage
 
 No explicit license file is currently included. Add a `LICENSE` file to define reuse/distribution terms. Also verify dataset and video usage rights before training or distributing derived models.
