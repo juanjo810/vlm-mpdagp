@@ -65,7 +65,7 @@ def normalize_for_variants(text: str) -> str:
     - elimina signos raros
     """
     text = normalize_text(text)
-    for c in [" e ", " y ", " and ", "+", ",", ";"]:
+    for c in [" e ", " y ", " and ", "+", ",", ";", "/"]:
         text = text.replace(c, ";")
     text = re.sub(r"[^a-z0-9; ]+", " ", text)
     text = re.sub(r"\s+", " ", text).strip()
@@ -113,9 +113,93 @@ def map_tokens_to_ids(tokens: list) -> list:
     return out
 
 
-# ================= SIMILITUD JERÁRQUICA (opcional) =================
-# Si quieres, aquí puedes enchufar tu scoring jerárquico usando ID_TO_FAMILIES
-# para crear métricas "soft". Este script se centra en métricas estándar.
+# ================= SIMILITUD JERÁRQUICA =================
+
+def families_for_ids(inst_ids: list[str]) -> list[str]:
+    families = []
+    seen = set()
+    for inst_id in inst_ids:
+        for family in ID_TO_FAMILIES.get(inst_id, []):
+            if family not in seen:
+                families.append(family)
+                seen.add(family)
+    return families
+
+def hierarchy_similarity_id(pred_id: str, true_id: str) -> float:
+    """
+    Similaridad jerárquica entre dos instrumentos (0..1):
+    - 1.0 cuando el instrumento canónico coincide
+    - en otro caso, Jaccard entre familias organológicas
+    """
+    if pred_id == true_id:
+        return 1.0
+
+    pred_families = set(ID_TO_FAMILIES.get(pred_id, []))
+    true_families = set(ID_TO_FAMILIES.get(true_id, []))
+
+    if not pred_families and not true_families:
+        return 0.0
+
+    union = pred_families | true_families
+    if not union:
+        return 0.0
+    intersection = pred_families & true_families
+    return len(intersection) / len(union)
+
+def soft_prf_single_example(true_ids: list[str], pred_ids: list[str]) -> tuple[float, float, float]:
+    """
+    Scores jerárquicos por ejemplo:
+    - precision_soft: media del mejor match de cada predicción contra verdad
+    - recall_soft: media del mejor match de cada real contra predicción
+    """
+    if len(pred_ids) == 0 and len(true_ids) == 0:
+        return 1.0, 1.0, 1.0
+    if len(pred_ids) == 0 or len(true_ids) == 0:
+        return 0.0, 0.0, 0.0
+
+    pred_best = [max(hierarchy_similarity_id(pred, true) for true in true_ids) for pred in pred_ids]
+    true_best = [max(hierarchy_similarity_id(pred, true) for pred in pred_ids) for true in true_ids]
+
+    precision_soft = float(np.mean(pred_best)) if pred_best else 0.0
+    recall_soft = float(np.mean(true_best)) if true_best else 0.0
+
+    if precision_soft + recall_soft == 0:
+        f1_soft = 0.0
+    else:
+        f1_soft = 2 * precision_soft * recall_soft / (precision_soft + recall_soft)
+
+    return precision_soft, recall_soft, f1_soft
+
+def hierarchical_instrument_metrics(y_true_ids: list[list[str]], y_pred_ids: list[list[str]]) -> dict:
+    """
+    Métricas de evaluación jerárquica:
+    1) Soft precision/recall/F1 por similitud ID->familias
+    2) Multilabel clásico, pero en el espacio de familias organológicas
+    """
+    per_example_scores = [soft_prf_single_example(true, pred) for true, pred in zip(y_true_ids, y_pred_ids)]
+    precision_soft = float(np.mean([s[0] for s in per_example_scores]))
+    recall_soft = float(np.mean([s[1] for s in per_example_scores]))
+    f1_soft = float(np.mean([s[2] for s in per_example_scores]))
+
+    y_true_families = [families_for_ids(ids) for ids in y_true_ids]
+    y_pred_families = [families_for_ids(ids) for ids in y_pred_ids]
+
+    all_families = sorted({family for families in ID_TO_FAMILIES.values() for family in families})
+    fam_mlb = MultiLabelBinarizer(classes=all_families)
+    y_true_fam_bin = fam_mlb.fit_transform(y_true_families)
+    y_pred_fam_bin = fam_mlb.transform(y_pred_families)
+
+    return {
+        "soft_precision": precision_soft,
+        "soft_recall": recall_soft,
+        "soft_f1": f1_soft,
+        "families_subset_accuracy": accuracy_score(y_true_fam_bin, y_pred_fam_bin),
+        "families_hamming_loss": hamming_loss(y_true_fam_bin, y_pred_fam_bin),
+        "families_jaccard_samples": jaccard_score(y_true_fam_bin, y_pred_fam_bin, average="samples", zero_division=0),
+        "families_precision_micro": precision_score(y_true_fam_bin, y_pred_fam_bin, average="micro", zero_division=0),
+        "families_recall_micro": recall_score(y_true_fam_bin, y_pred_fam_bin, average="micro", zero_division=0),
+        "families_f1_micro": f1_score(y_true_fam_bin, y_pred_fam_bin, average="micro", zero_division=0),
+    }
 
 def safe_binary_kappa(y_true_col, y_pred_col):
     y_true_col = np.asarray(y_true_col).astype(int)
@@ -251,6 +335,7 @@ for i in prompt_indices:
     m, mlb, y_true_bin, y_pred_bin, report = multilabel_metrics(
         y_true, y_pred, all_ids=ALL_IDS, make_report=False
     )
+    h = hierarchical_instrument_metrics(y_true, y_pred)
 
 
     print(f"Instrumentos subset_accuracy (exact match): {m['subset_accuracy']*100:.2f}%")  
@@ -265,6 +350,15 @@ for i in prompt_indices:
     print(f"Instrumentos f1_weighted:     {m['f1_weighted']*100:.2f}%")
     print(f"Instrumentos f1_samples:      {m['f1_samples']*100:.2f}%")
     print(f"Instrumentos kappa_macro_labels: {m['kappa_macro_labels']:.4f}")  
+    print(f"Instrumentos soft_precision jerárquica: {h['soft_precision']*100:.2f}%")
+    print(f"Instrumentos soft_recall jerárquica:    {h['soft_recall']*100:.2f}%")
+    print(f"Instrumentos soft_f1 jerárquica:        {h['soft_f1']*100:.2f}%")
+    print(f"Familias subset_accuracy (exact match): {h['families_subset_accuracy']*100:.2f}%")
+    print(f"Familias hamming_loss (lower=better):   {h['families_hamming_loss']:.4f}")
+    print(f"Familias jaccard_samples:               {h['families_jaccard_samples']*100:.2f}%")
+    print(f"Familias precision_micro:               {h['families_precision_micro']*100:.2f}%")
+    print(f"Familias recall_micro:                  {h['families_recall_micro']*100:.2f}%")
+    print(f"Familias f1_micro:                      {h['families_f1_micro']*100:.2f}%")
 
     # Report detallado por etiqueta (opcional; puede ser largo)
     # print(classification_report(y_true_bin, y_pred_bin, target_names=mlb.classes_, zero_division=0))

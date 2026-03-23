@@ -16,6 +16,8 @@ from tqdm import tqdm
 import warnings
 import numpy as np
 
+from utils import LabelNormalizer, stratified_category_instrument_split
+
 warnings.filterwarnings("ignore")
 
 # ================= CONFIG =================
@@ -38,6 +40,13 @@ RESOLUCION_MAX = 448
 
 # Split
 PCT_TRAIN = 0.8  # resto => test
+RANDOM_STATE = 42
+
+# Normalization dictionaries
+DICT_DIR = Path("test")
+CATEGORY_MAP_PATH = DICT_DIR / "category_map.json"
+VARIANT_TO_ID_PATH = DICT_DIR / "variant_to_id.json"
+ID_TO_FAMILIES_PATH = DICT_DIR / "id_to_families.json"
 
 # Prompt
 PROMPT_USER = """ Estos vídeos muestran vídeos tradicionales portugueses (folclore regional) que pueden tratar sobre canciones populares,
@@ -121,25 +130,6 @@ def frames_uniformes(n_frames: int, start_time: float, clip_duration: float):
     times = np.linspace(start_time, start_time + clip_duration, n_frames, endpoint=False)
     return [float(t) for t in times]
 
-def parse_instrumentos(raw):
-    """
-    Normalizing instrument list
-    """
-    if raw is None or (isinstance(raw, float) and np.isnan(raw)):
-        return []
-    s = str(raw)
-    parts = re.split(r"[;,/]+", s)
-    inst = []
-    for p in parts:
-        p = p.strip()
-        if p:
-            inst.append(p.lower())
-    seen, out = set(), []
-    for x in inst:
-        if x not in seen:
-            out.append(x); seen.add(x)
-    return out
-
 def build_example(frames_paths, prompt_user, categorias, instrumentos_list):
     """
     Building the example using the following structure:
@@ -167,8 +157,8 @@ def build_example(frames_paths, prompt_user, categorias, instrumentos_list):
 def procesar_video(row, idx_row: int):
     """1 row → multiple frame examples"""
     link = row.get("Link", "")
-    categorias = row.get("Categorias", "")
-    instrumentos_list = parse_instrumentos(row.get("Instrumentos", ""))
+    categorias = row.get("Categorias_norm", "")
+    instrumentos_list = row.get("Instrumentos_norm", [])
 
     vid_dir = FRAMES_DIR / f"vid_{idx_row:06d}"
     vid_dir.mkdir(parents=True, exist_ok=True)
@@ -252,9 +242,22 @@ def main():
     if not req.issubset(df.columns):
         raise ValueError(f"Excel must contain these cols: {sorted(req)}. It has: {list(df.columns)}")
 
-    n_train = int(len(df) * PCT_TRAIN)
-    train_df = df.iloc[:n_train].reset_index(drop=True)
-    test_df  = df.iloc[n_train:].reset_index(drop=True)
+    normalizer = LabelNormalizer.from_json_files(
+        category_map_path=CATEGORY_MAP_PATH,
+        variant_to_id_path=VARIANT_TO_ID_PATH,
+        id_to_families_path=ID_TO_FAMILIES_PATH,
+    )
+
+    df["Categorias_norm"] = df["Categorias"].apply(normalizer.normalize_category)
+    df["Instrumentos_norm"] = df["Instrumentos"].apply(normalizer.normalize_instruments)
+
+    train_df, test_df = stratified_category_instrument_split(
+        df=df,
+        category_col="Categorias_norm",
+        instruments_col="Instrumentos_norm",
+        train_size=PCT_TRAIN,
+        random_state=RANDOM_STATE,
+    )
 
     print(f"🧠 TRAIN videos: {len(train_df)} | 🧪 TEST videos: {len(test_df)}")
 
