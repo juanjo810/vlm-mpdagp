@@ -44,6 +44,7 @@ jupyter_client @ file:///home/task_176839840248915/croot/jupyter_client_17683990
 jupyter_core @ file:///home/task_176458820445830/conda-bld/jupyter_core_1764588284850/work
 MarkupSafe==3.0.3
 matplotlib-inline @ file:///home/task_176277916602646/conda-bld/matplotlib-inline_1762779180318/work
+matplotlib==3.7.5
 moviepy==2.2.1
 mpmath==1.3.0
 msgspec==0.20.0
