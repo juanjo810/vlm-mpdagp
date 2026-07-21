@@ -247,6 +247,7 @@ Evaluation script for predictions vs ground truth labels.
 
 - **Type/category** (single-label): accuracy, precision/recall/F1, Cohen’s kappa.
 - **Instruments** (multi-label): subset accuracy, hamming loss, jaccard, precision/recall/F1 (micro/macro/weighted/samples), macro kappa over labels.
+- **Hierarchical instruments/families**: soft precision/recall/F1 using instrument families, plus family-level subset accuracy, hamming loss, jaccard, precision, recall, and F1.
 
 #### Run
 
@@ -257,10 +258,11 @@ python test/evaluacion_jerarquica.py \
   --pred-excel resultados_limpios_qwen_finetunedfull.xlsx \
   --real-excel ../../Pruebas_finales/MUESTREO_BASE_SERPINS.xlsx \
   --prompt-indices 0,1,2 \
+  --dict-dir dictionaries \
   --output-dir evaluation_results
 ```
 
-The script still prints the global metrics listed above. In addition, for each evaluated prompt it writes the new files under:
+The script uses the shared dictionaries in `dictionaries/` through `preprocessing.utils.LabelNormalizer`, so category words and instrument variants are normalized consistently with preprocessing. It still prints the global metrics listed above. In addition, for each evaluated prompt it writes the new files under:
 
 ```text
 evaluation_results/prompt_<id>/
@@ -308,9 +310,9 @@ When both the reference and prediction instrument sets are empty, both per-sampl
 
 #### Dictionary resources
 
-- `variant_to_id.json`: instrument text variants -> canonical IDs.
-- `id_to_families.json`: canonical IDs -> hierarchical families.
-- `category_map.json`: category normalization map.
+- `dictionaries/variant_to_id.json`: instrument text variants -> canonical IDs.
+- `dictionaries/id_to_families.json`: canonical IDs -> hierarchical families.
+- `dictionaries/category_map.json`: category normalization map, including additional words/variants for classes.
 
 ### `variant_to_id.json`
 Normalization mapping for instrument names (synonyms/orthographic variants).

@@ -1,7 +1,5 @@
 import argparse
-import json
-import re
-import unicodedata
+import sys
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
@@ -25,12 +23,18 @@ from sklearn.metrics import (
 )
 from sklearn.preprocessing import MultiLabelBinarizer
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from preprocessing.utils.label_normalization import LabelNormalizer
+
 # ================= CONFIG =================
 pred_excel = "./resultados_limpios_qwen_finetunedfull.xlsx"
 real_excel = "../../Pruebas_finales/MUESTREO_BASE_SERPINS.xlsx"
 prompt_indices = [0, 1, 2]
 
-dict_dir = Path(__file__).resolve().parent  # carpeta donde estan los JSON
+dict_dir = REPO_ROOT / "dictionaries"
 variant_to_id_json = "variant_to_id.json"
 id_to_families_json = "id_to_families.json"
 category_map_json = "category_map.json"
@@ -40,88 +44,36 @@ default_output_dir = "./evaluation_results"
 
 # ================= I/O DICCIONARIOS =================
 
-def load_json(path: str | Path) -> dict[str, Any]:
-    """Load a UTF-8 JSON file."""
-    return json.loads(Path(path).read_text(encoding="utf-8"))
-
-
-def load_dictionaries(base_dir: str | Path = dict_dir) -> tuple[dict[str, str], dict[str, list[str]], dict[str, str]]:
-    """Load instrument and category dictionaries from the evaluation directory."""
+def load_label_normalizer(base_dir: str | Path = dict_dir) -> LabelNormalizer:
+    """Load the shared category and instrument dictionaries used by preprocessing."""
     base_path = Path(base_dir)
-    return (
-        load_json(base_path / variant_to_id_json),
-        load_json(base_path / id_to_families_json),
-        load_json(base_path / category_map_json),
+    return LabelNormalizer.from_json_files(
+        category_map_path=base_path / category_map_json,
+        variant_to_id_path=base_path / variant_to_id_json,
+        id_to_families_path=base_path / id_to_families_json,
     )
 
 
-VARIANT_TO_ID, ID_TO_FAMILIES, CATEGORY_MAP = load_dictionaries()
+NORMALIZER = load_label_normalizer()
 
 
 # ================= NORMALIZACION =================
 
-def strip_accents(s: str) -> str:
-    return "".join(
-        c for c in unicodedata.normalize("NFD", s)
-        if unicodedata.category(c) != "Mn"
-    )
-
-
-def normalize_text(text) -> str:
-    if pd.isna(text):
-        return ""
-    text = str(text).lower().strip()
-    text = strip_accents(text)
-    text = re.sub(r"\s+", " ", text)
-    return text
-
-
-def normalize_for_variants(text: str) -> str:
-    """
-    Normalizacion compatible con variant_to_id:
-    - lowercase + sin tildes
-    - convierte conectores en separador ';'
-    - elimina signos raros
-    """
-    text = normalize_text(text)
-    for c in [" e ", " y ", " and ", "+", ",", ";"]:
-        text = text.replace(c, ";")
-    text = re.sub(r"[^a-z0-9; ]+", " ", text)
-    text = re.sub(r"\s+", " ", text).strip()
-    return text
-
-
 def split_raw_labels(text) -> list[str]:
-    """
-    Split conservador por , ; y conectores.
-    Devuelve tokens normalizados (strings) sin mapear.
-    """
-    t = normalize_for_variants(text)
-    if not t:
-        return []
-    return [p.strip() for p in t.split(";") if p.strip()]
+    """Split raw multilabel text with the shared project normalizer."""
+    from preprocessing.utils.label_normalization import split_raw_labels as shared_split_raw_labels
 
+    return shared_split_raw_labels(text)
 
-# ================= CATEGORIAS (tipo) =================
 
 def normalize_category(cat: str) -> str:
-    cat_n = normalize_text(cat)
-    return CATEGORY_MAP.get(cat_n, cat_n)
+    """Normalize a category using the official dictionary."""
+    return NORMALIZER.normalize_category(cat)
 
 
-# ================= INSTRUMENTOS (mapa a IDs) =================
-
-def map_tokens_to_ids(tokens: list[str]) -> list[str]:
-    """
-    tokens: lista de strings ya normalizadas (sin tildes etc).
-    Retorna lista de IDs canonicos (filtra desconocidos).
-    """
-    ids = []
-    for tok in tokens:
-        id_ = VARIANT_TO_ID.get(tok)
-        if id_ is not None:
-            ids.append(id_)
-    return dedupe_preserving_order(ids)
+def map_tokens_to_ids(tokens: Iterable[str]) -> list[str]:
+    """Map normalized instrument tokens to canonical IDs using the official dictionary."""
+    return NORMALIZER.map_instrument_tokens_to_ids(tokens)
 
 
 def dedupe_preserving_order(values: Iterable[str]) -> list[str]:
@@ -150,9 +102,96 @@ def format_label_set(labels: Iterable[str], order: Sequence[str] | None = None) 
     return "|".join(sorted_labels(labels, order))
 
 
-# ================= SIMILITUD JERARQUICA (opcional) =================
-# Si quieres, aqui puedes enchufar tu scoring jerarquico usando ID_TO_FAMILIES
-# para crear metricas "soft". Este script se centra en metricas estandar.
+# ================= SIMILITUD JERARQUICA =================
+
+def families_for_ids(inst_ids: Iterable[str]) -> list[str]:
+    """Map instrument IDs to unique families, preserving dictionary order."""
+    return NORMALIZER.get_families_from_ids(inst_ids)
+
+
+def hierarchy_similarity_id(pred_id: str, true_id: str) -> float:
+    """
+    Hierarchical similarity between two instruments (0..1).
+
+    It is 1.0 for the same canonical instrument and otherwise the Jaccard
+    similarity between their organological families.
+    """
+    if pred_id == true_id:
+        return 1.0
+
+    pred_families = set(NORMALIZER.id_to_families.get(pred_id, []))
+    true_families = set(NORMALIZER.id_to_families.get(true_id, []))
+    union = pred_families | true_families
+    if not union:
+        return 0.0
+    return len(pred_families & true_families) / len(union)
+
+
+def soft_prf_single_example(true_ids: Sequence[str], pred_ids: Sequence[str]) -> tuple[float, float, float]:
+    """
+    Compute hierarchical soft precision/recall/F1 for a single sample.
+
+    Precision is the mean best match of each prediction against the reference.
+    Recall is the mean best match of each reference instrument against predictions.
+    """
+    if len(pred_ids) == 0 and len(true_ids) == 0:
+        return 1.0, 1.0, 1.0
+    if len(pred_ids) == 0 or len(true_ids) == 0:
+        return 0.0, 0.0, 0.0
+
+    pred_best = [max(hierarchy_similarity_id(pred, true) for true in true_ids) for pred in pred_ids]
+    true_best = [max(hierarchy_similarity_id(pred, true) for pred in pred_ids) for true in true_ids]
+
+    precision_soft = float(np.mean(pred_best)) if pred_best else 0.0
+    recall_soft = float(np.mean(true_best)) if true_best else 0.0
+    if precision_soft + recall_soft == 0:
+        f1_soft = 0.0
+    else:
+        f1_soft = 2 * precision_soft * recall_soft / (precision_soft + recall_soft)
+    return precision_soft, recall_soft, f1_soft
+
+
+def hierarchical_instrument_metrics(
+    y_true_ids: Sequence[Sequence[str]],
+    y_pred_ids: Sequence[Sequence[str]],
+) -> dict[str, float]:
+    """
+    Compute hierarchical instrument metrics.
+
+    Includes soft ID-to-family precision/recall/F1 and classic multilabel metrics
+    in the organological-family space.
+    """
+    validate_equal_length("instrumentos reales", y_true_ids, "instrumentos predichos", y_pred_ids)
+    per_example_scores = [soft_prf_single_example(true, pred) for true, pred in zip(y_true_ids, y_pred_ids)]
+
+    y_true_families = [families_for_ids(ids) for ids in y_true_ids]
+    y_pred_families = [families_for_ids(ids) for ids in y_pred_ids]
+
+    all_families = sorted({family for families in NORMALIZER.id_to_families.values() for family in families})
+    fam_mlb = MultiLabelBinarizer(classes=all_families)
+    y_true_fam_bin = fam_mlb.fit_transform(y_true_families)
+    y_pred_fam_bin = fam_mlb.transform(y_pred_families)
+
+    return {
+        "soft_precision": float(np.mean([s[0] for s in per_example_scores])),
+        "soft_recall": float(np.mean([s[1] for s in per_example_scores])),
+        "soft_f1": float(np.mean([s[2] for s in per_example_scores])),
+        "families_subset_accuracy": accuracy_score(y_true_fam_bin, y_pred_fam_bin),
+        "families_hamming_loss": hamming_loss(y_true_fam_bin, y_pred_fam_bin),
+        "families_jaccard_samples": jaccard_score(
+            y_true_fam_bin, y_pred_fam_bin, average="samples", zero_division=0
+        ),
+        "families_precision_micro": precision_score(
+            y_true_fam_bin, y_pred_fam_bin, average="micro", zero_division=0
+        ),
+        "families_recall_micro": recall_score(
+            y_true_fam_bin, y_pred_fam_bin, average="micro", zero_division=0
+        ),
+        "families_f1_micro": f1_score(
+            y_true_fam_bin, y_pred_fam_bin, average="micro", zero_division=0
+        ),
+    }
+
 
 def safe_binary_kappa(y_true_col, y_pred_col):
     y_true_col = np.asarray(y_true_col).astype(int)
@@ -186,12 +225,12 @@ def category_class_order(
     y_pred: Sequence[str],
     official_categories: Sequence[str] | None = None,
 ) -> list[str]:
-    """Build a deterministic category order for multiclass metrics."""
+    """Build a deterministic category order from the official category dictionary."""
     observed = list(y_true) + list(y_pred)
     if official_categories is not None:
         return sorted_labels(observed, official_categories)
-    category_map_values = sorted(set(CATEGORY_MAP.values()))
-    return sorted_labels(observed + category_map_values, category_map_values)
+    official_order = sorted(set(NORMALIZER.category_map.values()))
+    return sorted_labels(observed + official_order, official_order)
 
 
 def category_metrics_per_class(
@@ -249,10 +288,8 @@ def instrument_metrics_per_class(
 
 def multilabel_metrics(y_true, y_pred, all_ids, make_report=False, report_output_dict=False):
     """
-    y_true/y_pred: list-of-list de IDs canonicos
-    all_ids: vocabulario cerrado de IDs
-    make_report: si True, genera classification_report
-    report_output_dict: si True, report como dict; si False, como str
+    y_true/y_pred: list-of-list de IDs canonicos.
+    all_ids: vocabulario cerrado de IDs.
     """
     mlb = MultiLabelBinarizer(classes=all_ids)
     y_true_bin = mlb.fit_transform(y_true)
@@ -279,7 +316,6 @@ def multilabel_metrics(y_true, y_pred, all_ids, make_report=False, report_output
     kappa_macro, kappas = per_label_kappa(y_true_bin, y_pred_bin)
     metrics["kappa_macro_labels"] = kappa_macro
     metrics["kappa_per_label"] = dict(zip(list(mlb.classes_), kappas))
-
     metrics["n_labels"] = len(mlb.classes_)
 
     report = None
@@ -597,10 +633,11 @@ def evaluate_prompt(
     y_true_instruments = df["Instrumentos_real_ids"].tolist()
     y_pred_instruments = df[instrument_pred_col].tolist()
 
-    instrument_order = list(all_instrument_ids or sorted(ID_TO_FAMILIES.keys()))
+    instrument_order = list(all_instrument_ids or sorted(NORMALIZER.id_to_families.keys()))
     metrics, mlb, y_true_bin, y_pred_bin, report = multilabel_metrics(
         y_true_instruments, y_pred_instruments, all_ids=instrument_order, make_report=False
     )
+    hierarchical_metrics = hierarchical_instrument_metrics(y_true_instruments, y_pred_instruments)
     category_order = category_class_order(y_true_category, y_pred_category)
     metadata = metadata_from_dataframes(df_pred, df_real, prompt_id)
     exported_paths = export_evaluation_artifacts(
@@ -619,6 +656,7 @@ def evaluate_prompt(
     return {
         "tipo_acc": (df["Categorias_real"] == df[category_pred_col]).mean(),
         "instrument_metrics": metrics,
+        "hierarchical_metrics": hierarchical_metrics,
         "mlb": mlb,
         "y_true_bin": y_true_bin,
         "y_pred_bin": y_pred_bin,
@@ -628,7 +666,7 @@ def evaluate_prompt(
 
 
 def print_global_metrics(df: pd.DataFrame, prompt_id: int, evaluation: dict[str, Any]) -> None:
-    """Print the same global metric meanings as the original script."""
+    """Print the same global metric meanings as the original script plus hierarchical metrics."""
     print(f"\n=========== PROMPT {prompt_id} ===========")
     print(f"Tipo accuracy: {evaluation['tipo_acc']*100:.2f}%")
 
@@ -657,6 +695,18 @@ def print_global_metrics(df: pd.DataFrame, prompt_id: int, evaluation: dict[str,
     print(f"Instrumentos f1_weighted:     {m['f1_weighted']*100:.2f}%")
     print(f"Instrumentos f1_samples:      {m['f1_samples']*100:.2f}%")
     print(f"Instrumentos kappa_macro_labels: {m['kappa_macro_labels']:.4f}")
+
+    h = evaluation["hierarchical_metrics"]
+    print(f"Instrumentos soft_precision jerarquica: {h['soft_precision']*100:.2f}%")
+    print(f"Instrumentos soft_recall jerarquica:    {h['soft_recall']*100:.2f}%")
+    print(f"Instrumentos soft_f1 jerarquica:        {h['soft_f1']*100:.2f}%")
+    print(f"Familias subset_accuracy (exact match): {h['families_subset_accuracy']*100:.2f}%")
+    print(f"Familias hamming_loss (lower=better):   {h['families_hamming_loss']:.4f}")
+    print(f"Familias jaccard_samples:               {h['families_jaccard_samples']*100:.2f}%")
+    print(f"Familias precision_micro:               {h['families_precision_micro']*100:.2f}%")
+    print(f"Familias recall_micro:                  {h['families_recall_micro']*100:.2f}%")
+    print(f"Familias f1_micro:                      {h['families_f1_micro']*100:.2f}%")
+
     print("Ficheros exportados:")
     for path in evaluation["exported_paths"].values():
         print(f"  - {path}")
@@ -680,8 +730,8 @@ def main() -> None:
     parser.add_argument("--output-dir", default=default_output_dir, help="Directorio base de resultados.")
     args = parser.parse_args()
 
-    global VARIANT_TO_ID, ID_TO_FAMILIES, CATEGORY_MAP
-    VARIANT_TO_ID, ID_TO_FAMILIES, CATEGORY_MAP = load_dictionaries(args.dict_dir)
+    global NORMALIZER
+    NORMALIZER = load_label_normalizer(args.dict_dir)
 
     df_pred = pd.read_excel(args.pred_excel)
     df_real = pd.read_excel(args.real_excel)
@@ -705,7 +755,7 @@ def main() -> None:
             df_real=df_real,
             prompt_id=prompt_id,
             output_dir=prompt_output_dir,
-            all_instrument_ids=sorted(ID_TO_FAMILIES.keys()),
+            all_instrument_ids=sorted(NORMALIZER.id_to_families.keys()),
         )
         print_global_metrics(df, prompt_id, evaluation)
 

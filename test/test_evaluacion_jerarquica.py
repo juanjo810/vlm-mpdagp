@@ -11,6 +11,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from evaluacion_jerarquica import (
     build_prediction_rows,
     category_metrics_per_class,
+    hierarchical_instrument_metrics,
+    normalize_category,
     export_category_confusion_matrix,
     export_evaluation_artifacts,
     format_label_set,
@@ -20,6 +22,10 @@ from evaluacion_jerarquica import (
 
 
 class CategoryMetricsTests(unittest.TestCase):
+    def test_new_category_dictionary_words_are_used(self):
+        self.assertEqual(normalize_category("historai"), "historia de vida")
+        self.assertEqual(normalize_category("musica secular/festival/comunidade"), "musica secular/festiva/comunidade")
+
     def test_perfect_prediction(self):
         df = category_metrics_per_class(["a", "b"], ["a", "b"], ["a", "b"])
 
@@ -58,6 +64,13 @@ class CategoryMetricsTests(unittest.TestCase):
 
 
 class InstrumentMetricsTests(unittest.TestCase):
+    def test_hierarchical_metrics_use_instrument_families(self):
+        metrics = hierarchical_instrument_metrics([["guitarra"]], [["baixo"]])
+
+        self.assertGreater(metrics["soft_f1"], 0.0)
+        self.assertGreater(metrics["families_f1_micro"], 0.0)
+        self.assertLess(metrics["families_f1_micro"], 1.0)
+
     def test_exact_match(self):
         scores = sample_instrument_scores(["guitarra"], ["guitarra"], ["guitarra"])
 
