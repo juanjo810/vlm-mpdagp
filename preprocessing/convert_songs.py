@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore")
 ACCESS_TOKEN = "d8cd6566978abeabbe2eef523f7d3c11"  # Vimeo token
 
 # Paths
-EXCEL_PATH = "../dataset/Base_pruebas.xlsx"
+EXCEL_PATH = "../../Pruebas_finales/MUESTREO_BASE_SERPINS.xlsx"
 BASE_DIR = Path("preprocessed_dataset")
 FRAMES_DIR = BASE_DIR / "frames"
 DATASET_TRAIN_JSONL = BASE_DIR / "train.jsonl"
@@ -39,11 +39,11 @@ N_FRAMES_POR_CLIP = 8
 RESOLUCION_MAX = 448
 
 # Split
-PCT_TRAIN = 0.8  # resto => test
+PCT_TRAIN = 0.9999  # resto => test
 RANDOM_STATE = 42
 
 # Normalization dictionaries
-DICT_DIR = Path("test")
+DICT_DIR = Path("../dictionaries")
 CATEGORY_MAP_PATH = DICT_DIR / "category_map.json"
 VARIANT_TO_ID_PATH = DICT_DIR / "variant_to_id.json"
 ID_TO_FAMILIES_PATH = DICT_DIR / "id_to_families.json"
@@ -227,7 +227,7 @@ def write_jsonl(df, out_path: Path, split_name: str):
     n_examples = 0
     with open(out_path, "w", encoding="utf-8") as f:
         for i, row in tqdm(df.iterrows(), total=len(df), desc=f"Procesando {split_name}"):
-            ejemplos = procesar_video(row, int(i))
+            ejemplos = procesar_video(row, int(i)+6847)
             for ej in ejemplos:
                 f.write(json.dumps(ej, ensure_ascii=False) + "\n")
                 n_examples += 1
