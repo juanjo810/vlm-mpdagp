@@ -247,12 +247,72 @@ Evaluation script for predictions vs ground truth labels.
 
 - **Type/category** (single-label): accuracy, precision/recall/F1, Cohen’s kappa.
 - **Instruments** (multi-label): subset accuracy, hamming loss, jaccard, precision/recall/F1 (micro/macro/weighted/samples), macro kappa over labels.
+- **Hierarchical instruments/families**: soft precision/recall/F1 using instrument families, plus family-level subset accuracy, hamming loss, jaccard, precision, recall, and F1.
+
+#### Run
+
+From the repository root:
+
+```bash
+python test/evaluacion_jerarquica.py \
+  --pred-excel resultados_limpios_qwen_finetunedfull.xlsx \
+  --real-excel ../../Pruebas_finales/MUESTREO_BASE_SERPINS.xlsx \
+  --prompt-indices 0,1,2 \
+  --dict-dir dictionaries \
+  --output-dir evaluation_results
+```
+
+The script uses the shared dictionaries in `dictionaries/` through `preprocessing.utils.LabelNormalizer`, so category words and instrument variants are normalized consistently with preprocessing. It still prints the global metrics listed above. In addition, for each evaluated prompt it writes the new files under:
+
+```text
+evaluation_results/prompt_<id>/
+```
+
+For example, prompt 0 generates:
+
+```text
+evaluation_results/prompt_0/category_metrics_per_class.csv
+evaluation_results/prompt_0/instrument_metrics_per_class.csv
+evaluation_results/prompt_0/category_confusion_matrix.png
+evaluation_results/prompt_0/evaluation_predictions.csv
+evaluation_results/prompt_0/category_errors.csv
+evaluation_results/prompt_0/instrument_errors.csv
+```
+
+#### New evaluation exports
+
+- `category_metrics_per_class.csv`: one row per category with `class_name`, `precision`, `recall`, `f1`, and `support`.
+- `instrument_metrics_per_class.csv`: one row per instrument with `instrument_name`, `precision`, `recall`, `f1`, and `support`.
+- `category_confusion_matrix.png`: row-normalized confusion matrix. Rows are true categories and columns are predicted categories.
+- `evaluation_predictions.csv`: one row per evaluated video/sample with category correctness, instrument set comparison, per-sample instrument F1, and per-sample Jaccard.
+- `category_errors.csv`: only rows where `true_category != predicted_category`.
+- `instrument_errors.csv`: only rows where the true and predicted instrument sets differ, sorted by `instrument_f1` and then `instrument_jaccard` ascending.
+
+Instrument lists inside CSV files are represented as deterministic pipe-separated labels, for example:
+
+```text
+accordion|guitar|voice
+```
+
+Per-sample instrument F1 is computed as:
+
+```text
+2 * correct / (2 * correct + missed + extra)
+```
+
+Per-sample Jaccard is computed as:
+
+```text
+correct / union(true_instruments, predicted_instruments)
+```
+
+When both the reference and prediction instrument sets are empty, both per-sample F1 and Jaccard are set to `1.0`, because the prediction is an exact empty-set match.
 
 #### Dictionary resources
 
-- `variant_to_id.json`: instrument text variants -> canonical IDs.
-- `id_to_families.json`: canonical IDs -> hierarchical families.
-- `category_map.json`: category normalization map.
+- `dictionaries/variant_to_id.json`: instrument text variants -> canonical IDs.
+- `dictionaries/id_to_families.json`: canonical IDs -> hierarchical families.
+- `dictionaries/category_map.json`: category normalization map, including additional words/variants for classes.
 
 ### `variant_to_id.json`
 Normalization mapping for instrument names (synonyms/orthographic variants).

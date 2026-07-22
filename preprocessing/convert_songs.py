@@ -16,6 +16,8 @@ from tqdm import tqdm
 import warnings
 import numpy as np
 
+from utils import LabelNormalizer, stratified_category_instrument_split
+
 warnings.filterwarnings("ignore")
 
 # ================= CONFIG =================
@@ -24,7 +26,7 @@ warnings.filterwarnings("ignore")
 ACCESS_TOKEN = "d8cd6566978abeabbe2eef523f7d3c11"  # Vimeo token
 
 # Paths
-EXCEL_PATH = "../dataset/Base_pruebas.xlsx"
+EXCEL_PATH = "../../Pruebas_finales/MUESTREO_BASE_SERPINS.xlsx"
 BASE_DIR = Path("preprocessed_dataset")
 FRAMES_DIR = BASE_DIR / "frames"
 DATASET_TRAIN_JSONL = BASE_DIR / "train.jsonl"
@@ -37,7 +39,14 @@ N_FRAMES_POR_CLIP = 8
 RESOLUCION_MAX = 448
 
 # Split
-PCT_TRAIN = 0.8  # resto => test
+PCT_TRAIN = 0.9999  # resto => test
+RANDOM_STATE = 42
+
+# Normalization dictionaries
+DICT_DIR = Path("../dictionaries")
+CATEGORY_MAP_PATH = DICT_DIR / "category_map.json"
+VARIANT_TO_ID_PATH = DICT_DIR / "variant_to_id.json"
+ID_TO_FAMILIES_PATH = DICT_DIR / "id_to_families.json"
 
 # Prompt
 PROMPT_USER = """ Estos vídeos muestran vídeos tradicionales portugueses (folclore regional) que pueden tratar sobre canciones populares,
@@ -121,25 +130,6 @@ def frames_uniformes(n_frames: int, start_time: float, clip_duration: float):
     times = np.linspace(start_time, start_time + clip_duration, n_frames, endpoint=False)
     return [float(t) for t in times]
 
-def parse_instrumentos(raw):
-    """
-    Normalizing instrument list
-    """
-    if raw is None or (isinstance(raw, float) and np.isnan(raw)):
-        return []
-    s = str(raw)
-    parts = re.split(r"[;,/]+", s)
-    inst = []
-    for p in parts:
-        p = p.strip()
-        if p:
-            inst.append(p.lower())
-    seen, out = set(), []
-    for x in inst:
-        if x not in seen:
-            out.append(x); seen.add(x)
-    return out
-
 def build_example(frames_paths, prompt_user, categorias, instrumentos_list):
     """
     Building the example using the following structure:
@@ -167,8 +157,8 @@ def build_example(frames_paths, prompt_user, categorias, instrumentos_list):
 def procesar_video(row, idx_row: int):
     """1 row → multiple frame examples"""
     link = row.get("Link", "")
-    categorias = row.get("Categorias", "")
-    instrumentos_list = parse_instrumentos(row.get("Instrumentos", ""))
+    categorias = row.get("Categorias_norm", "")
+    instrumentos_list = row.get("Instrumentos_norm", [])
 
     vid_dir = FRAMES_DIR / f"vid_{idx_row:06d}"
     vid_dir.mkdir(parents=True, exist_ok=True)
@@ -237,7 +227,7 @@ def write_jsonl(df, out_path: Path, split_name: str):
     n_examples = 0
     with open(out_path, "w", encoding="utf-8") as f:
         for i, row in tqdm(df.iterrows(), total=len(df), desc=f"Procesando {split_name}"):
-            ejemplos = procesar_video(row, int(i))
+            ejemplos = procesar_video(row, int(i)+6847)
             for ej in ejemplos:
                 f.write(json.dumps(ej, ensure_ascii=False) + "\n")
                 n_examples += 1
@@ -252,9 +242,22 @@ def main():
     if not req.issubset(df.columns):
         raise ValueError(f"Excel must contain these cols: {sorted(req)}. It has: {list(df.columns)}")
 
-    n_train = int(len(df) * PCT_TRAIN)
-    train_df = df.iloc[:n_train].reset_index(drop=True)
-    test_df  = df.iloc[n_train:].reset_index(drop=True)
+    normalizer = LabelNormalizer.from_json_files(
+        category_map_path=CATEGORY_MAP_PATH,
+        variant_to_id_path=VARIANT_TO_ID_PATH,
+        id_to_families_path=ID_TO_FAMILIES_PATH,
+    )
+
+    df["Categorias_norm"] = df["Categorias"].apply(normalizer.normalize_category)
+    df["Instrumentos_norm"] = df["Instrumentos"].apply(normalizer.normalize_instruments)
+
+    train_df, test_df = stratified_category_instrument_split(
+        df=df,
+        category_col="Categorias_norm",
+        instruments_col="Instrumentos_norm",
+        train_size=PCT_TRAIN,
+        random_state=RANDOM_STATE,
+    )
 
     print(f"🧠 TRAIN videos: {len(train_df)} | 🧪 TEST videos: {len(test_df)}")
 

@@ -1,0 +1,1559 @@
+{
+  "4 acustica": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "ableton live": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "acapella": [
+    "voz"
+  ],
+  "acordeao": [
+    "aerofone",
+    "palheta_livre",
+    "popular_global"
+  ],
+  "acustica": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "adufe": [
+    "membranofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "agogo": [
+    "idiofone",
+    "percussao"
+  ],
+  "agua": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "alaude": [
+    "cordofone"
+  ],
+  "alface": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "altifalante": [
+    "eletronico",
+    "reproducao"
+  ],
+  "ambiente": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "amplificador": [
+    "eletronico",
+    "amplificacao"
+  ],
+  "ancinho": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "apito": [
+    "aerofone",
+    "madeira"
+  ],
+  "areia": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "arvore": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "assobiar": [
+    "voz"
+  ],
+  "assobio": [
+    "voz"
+  ],
+  "atabaque": [
+    "membranofone"
+  ],
+  "autoharp": [
+    "cordofone"
+  ],
+  "azeitona": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "backing track": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "badalo": [
+    "idiofone",
+    "percussao"
+  ],
+  "baile": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "baixo": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "balafon": [
+    "idiofone",
+    "lamelas"
+  ],
+  "balde": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "bambu": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "bandolim": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_europeu"
+  ],
+  "banjo": [
+    "cordofone",
+    "dedilhado",
+    "popular_global"
+  ],
+  "baquetas": [
+    "idiofone"
+  ],
+  "barco": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "baritono": [
+    "voz"
+  ],
+  "barril": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "barro": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "batata": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "bateria": [
+    "membranofone",
+    "percussao"
+  ],
+  "beat box": [
+    "voz"
+  ],
+  "berco": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "berimbau": [
+    "cordofone"
+  ],
+  "berimbau dan moi": [
+    "idiofone",
+    "lamelas"
+  ],
+  "berlindes": [
+    "idiofone"
+  ],
+  "bexigoncelo": [
+    "membranofone",
+    "friccao"
+  ],
+  "bola": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "bomba": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "bombardino": [
+    "aerofone",
+    "metal"
+  ],
+  "bombo": [
+    "membranofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "boneco": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "bongo": [
+    "membranofone",
+    "percussao"
+  ],
+  "bouzouki": [
+    "cordofone"
+  ],
+  "braguinha": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "brajao": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "brinquedos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "brinquinho": [
+    "idiofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "buzio": [
+    "aerofone",
+    "livre"
+  ],
+  "cabaca": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "caixa": [
+    "membranofone",
+    "percussao"
+  ],
+  "cajon": [
+    "membranofone",
+    "percussao"
+  ],
+  "cana": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "cantaro": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "cante": [
+    "voz"
+  ],
+  "captadores de som": [
+    "eletronico",
+    "captacao"
+  ],
+  "carcanholas": [
+    "idiofone",
+    "percussao"
+  ],
+  "cardadeira": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "carrilhao": [
+    "idiofone",
+    "percussao"
+  ],
+  "carro": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "carros": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "cartaxinho": [
+    "aerofone",
+    "madeira"
+  ],
+  "cassetes": [
+    "eletronico",
+    "suporte_audio"
+  ],
+  "castanholas": [
+    "idiofone",
+    "percussao_tradicional"
+  ],
+  "catavento": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "cavalo": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "cavaquinho": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "caxixi": [
+    "idiofone"
+  ],
+  "cestos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "chapa de zinco em estrutura": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "charango": [
+    "cordofone"
+  ],
+  "charrasco": [
+    "idiofone",
+    "friccao"
+  ],
+  "chave": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "chavenas de cafe": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "chocalhos": [
+    "idiofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "chuveiro": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "circuit bending": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "citara": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "clarinete": [
+    "aerofone",
+    "palheta",
+    "orquestral"
+  ],
+  "clavas": [
+    "idiofone",
+    "percussao"
+  ],
+  "cobrao": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "coco": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "colher": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "comida": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "computador": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "concertina": [
+    "aerofone",
+    "palheta_livre",
+    "tradicional_portugues"
+  ],
+  "conchas": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "conga": [
+    "membranofone"
+  ],
+  "contrabaixo": [
+    "cordofone",
+    "arco",
+    "orquestral"
+  ],
+  "contralto": [
+    "voz"
+  ],
+  "cordofone": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "corpo": [
+    "idiofone",
+    "corporal"
+  ],
+  "cortica": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "da line6 stompbox": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "danca": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "darbouka": [
+    "membranofone"
+  ],
+  "de arame": [
+    "cordofone",
+    "viola_portuguesa"
+  ],
+  "didgeridoo": [
+    "aerofone",
+    "madeira"
+  ],
+  "distorcao": [
+    "eletronico",
+    "efeitos"
+  ],
+  "djembe": [
+    "membranofone",
+    "percussao",
+    "tradicional_global"
+  ],
+  "dohl": [
+    "membranofone"
+  ],
+  "drum track": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "dum dum": [
+    "membranofone"
+  ],
+  "dunun": [
+    "membranofone"
+  ],
+  "efeitos": [
+    "eletronico",
+    "efeitos"
+  ],
+  "electrofone": [
+    "eletronico"
+  ],
+  "eletrofone": [
+    "eletronico"
+  ],
+  "elevador": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "enchada": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "entrevista": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "enxada": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "escadas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "etc": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "eufonio": [
+    "aerofone",
+    "metal"
+  ],
+  "fagote": [
+    "aerofone",
+    "palheta"
+  ],
+  "fecho eclair": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "ferramentas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "ferrinhos": [
+    "idiofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "ferros": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "fiadeira": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "finger cymbals": [
+    "idiofone",
+    "percussao"
+  ],
+  "flauta": [
+    "aerofone",
+    "madeira"
+  ],
+  "flauta de bisel": [
+    "aerofone",
+    "madeira"
+  ],
+  "flauta de tamborileiro": [
+    "aerofone",
+    "madeira"
+  ],
+  "flauta dupla": [
+    "aerofone",
+    "madeira"
+  ],
+  "flauta peruana": [
+    "aerofone",
+    "madeira"
+  ],
+  "flauta transversal": [
+    "aerofone",
+    "madeira"
+  ],
+  "foice": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "folha de platano": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "folhas": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "fraita": [
+    "aerofone",
+    "madeira"
+  ],
+  "frame drum": [
+    "membranofone"
+  ],
+  "fretless": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "frigideira": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "funil": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "gaita de roncos": [
+    "aerofone",
+    "madeira"
+  ],
+  "gaita_de_beicos": [
+    "aerofone",
+    "livre"
+  ],
+  "gaita_de_foles": [
+    "aerofone",
+    "palheta",
+    "tradicional_portugues"
+  ],
+  "gancho de cabelo": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "garagab": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "garrafa": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "garrafa de vidro": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "garrafas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "genebres": [
+    "idiofone",
+    "percussao"
+  ],
+  "geradores": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "glockenspiel": [
+    "idiofone",
+    "lamelas",
+    "orquestral"
+  ],
+  "godos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "gongo": [
+    "idiofone",
+    "percussao"
+  ],
+  "grao de bico": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "grilinho": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "guitalele": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "guitarra": [
+    "cordofone",
+    "dedilhado",
+    "popular_global"
+  ],
+  "guitarra_portuguesa": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "guitolao": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "guizos": [
+    "idiofone",
+    "percussao_tradicional"
+  ],
+  "gumbri": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "hamonio": [
+    "aerofone",
+    "palheta_livre"
+  ],
+  "handpan": [
+    "idiofone"
+  ],
+  "handpan drum": [
+    "idiofone"
+  ],
+  "harmonica": [
+    "aerofone",
+    "livre"
+  ],
+  "harpa": [
+    "cordofone",
+    "dedilhado",
+    "orquestral"
+  ],
+  "instrumentos agricolas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "instrumentos de papel": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "iphone": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "joao aguardela": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "junta de vacas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "kalimba": [
+    "idiofone",
+    "lamelas"
+  ],
+  "kazoo": [
+    "membranofone",
+    "mirliton"
+  ],
+  "kissange": [
+    "idiofone",
+    "lamelas"
+  ],
+  "kora": [
+    "cordofone"
+  ],
+  "lapsteel guitar": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "lata": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "linho": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "loop": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "loop station": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "loop_station": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "looper": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "m13": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "machete": [
+    "cordofone"
+  ],
+  "madeira": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "manivela": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "maos": [
+    "idiofone",
+    "corporal"
+  ],
+  "maquina de barbear": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "maquina de costura": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "maquina de escrever": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "maquinas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "mar": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "maraca de ovo": [
+    "idiofone"
+  ],
+  "maracas": [
+    "idiofone",
+    "percussao"
+  ],
+  "marioneta": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "martelo": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "massa de pao": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "massa de pastel": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "megafone": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "melodica": [
+    "aerofone",
+    "palheta_livre",
+    "teclas"
+  ],
+  "mesa": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "mesa de dj": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "mesa de olaria": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "mesa de som": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "mesa_mistura": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "metais": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "metalofone": [
+    "idiofone",
+    "lamelas"
+  ],
+  "metronomo": [
+    "eletronico",
+    "tempo"
+  ],
+  "microfone": [
+    "eletronico",
+    "captacao"
+  ],
+  "microfone de contacto": [
+    "eletronico",
+    "captacao"
+  ],
+  "milho": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "mistura": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "mo": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "moinho": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "moinho de agua": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "mouco beirao": [
+    "aerofone",
+    "palheta"
+  ],
+  "natureza": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "nyckelharpa": [
+    "cordofone",
+    "arco"
+  ],
+  "objectos de percussao": [
+    "idiofone"
+  ],
+  "oboe": [
+    "aerofone",
+    "palheta",
+    "orquestral"
+  ],
+  "oboe beirao": [
+    "aerofone",
+    "palheta"
+  ],
+  "obras": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "ocarina": [
+    "aerofone",
+    "madeira"
+  ],
+  "ocean drum": [
+    "membranofone"
+  ],
+  "omnichord": [
+    "eletronico",
+    "cordas_interface"
+  ],
+  "orgao": [
+    "aerofone",
+    "teclas"
+  ],
+  "orgao eletronico": [
+    "eletronico",
+    "teclas"
+  ],
+  "orgao portativo": [
+    "aerofone",
+    "madeira"
+  ],
+  "oscilador de electrodos": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "ovelhas": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "ovo": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "ovo ritmico": [
+    "idiofone"
+  ],
+  "pa": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "paisagem sonora": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "palheta": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "palmas": [
+    "idiofone",
+    "corporal"
+  ],
+  "pandeireta": [
+    "membranofone",
+    "percussao_tradicional"
+  ],
+  "pandeiro": [
+    "membranofone",
+    "percussao_tradicional"
+  ],
+  "pandereita": [
+    "membranofone"
+  ],
+  "papel": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "passarinho": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "passaros": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "pastores": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "patrimonio": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pau": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pau_de_chuva": [
+    "idiofone",
+    "percussao"
+  ],
+  "paus": [
+    "idiofone",
+    "percussao"
+  ],
+  "pedais": [
+    "eletronico",
+    "efeitos"
+  ],
+  "pedais de efeito": [
+    "eletronico",
+    "efeitos"
+  ],
+  "pedal de distorcao": [
+    "eletronico",
+    "efeitos"
+  ],
+  "pedal de loop": [
+    "eletronico",
+    "efeitos"
+  ],
+  "pedra": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "pedra pendulo": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "pedras": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "pele": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "peneira": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "peneiras": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "percussao_generica": [
+    "membranofone",
+    "idiofone",
+    "percussao"
+  ],
+  "pes": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pes sapateado": [
+    "idiofone",
+    "corporal"
+  ],
+  "piano": [
+    "cordofone",
+    "percussao_teclas"
+  ],
+  "pianola": [
+    "cordofone",
+    "percussao_teclas"
+  ],
+  "pifaro": [
+    "aerofone",
+    "madeira"
+  ],
+  "pincel": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pinha": [
+    "idiofone",
+    "percussao"
+  ],
+  "pipa": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pistola": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pitos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "pratos": [
+    "idiofone",
+    "percussao"
+  ],
+  "pratos eletronicos": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "programacoes": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "psalterium": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "queijo": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "quena": [
+    "aerofone",
+    "madeira"
+  ],
+  "rabeca": [
+    "cordofone",
+    "arco"
+  ],
+  "rabel": [
+    "cordofone",
+    "arco"
+  ],
+  "rajao": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "rajao soprano": [
+    "cordofone"
+  ],
+  "raquete": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "reco_reco": [
+    "idiofone",
+    "percussao"
+  ],
+  "recolhas sonoras": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "religiao": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "rio": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "roda": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "roda de oleiro": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "sachos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "sampler": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "sanfona": [
+    "cordofone",
+    "friccao"
+  ],
+  "sapatos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "sarroca": [
+    "idiofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "sarten": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "saxofone": [
+    "aerofone",
+    "palheta",
+    "popular_global"
+  ],
+  "saxofone alto": [
+    "aerofone",
+    "palheta"
+  ],
+  "saxofone baritono": [
+    "aerofone",
+    "palheta"
+  ],
+  "saxofone soprano": [
+    "aerofone",
+    "palheta"
+  ],
+  "saxofone tenor": [
+    "aerofone",
+    "palheta"
+  ],
+  "seixo": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "seixos": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "sequenciadores": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "serrote": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "shaker": [
+    "idiofone",
+    "percussao"
+  ],
+  "shanphoon": [
+    "aerofone"
+  ],
+  "shruti": [
+    "aerofone",
+    "palheta_livre"
+  ],
+  "sino": [
+    "idiofone",
+    "percussao"
+  ],
+  "sinos": [
+    "idiofone",
+    "percussao"
+  ],
+  "sintetizador": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "sintetizadores": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "sintetizadores digitais": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "sirene": [
+    "aerofone",
+    "livre"
+  ],
+  "sitar": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "slide guitar": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "sordune": [
+    "aerofone",
+    "madeira"
+  ],
+  "sousafone": [
+    "aerofone",
+    "metal"
+  ],
+  "surdo": [
+    "membranofone"
+  ],
+  "tablas": [
+    "membranofone",
+    "percussao",
+    "tradicional_global"
+  ],
+  "tabua de lavar a roupa": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "tabua de madeira percutida": [
+    "idiofone"
+  ],
+  "tabuas": [
+    "idiofone"
+  ],
+  "tabuinhas": [
+    "idiofone"
+  ],
+  "taca tibetana": [
+    "idiofone",
+    "percussao"
+  ],
+  "tacas": [
+    "idiofone",
+    "percussao"
+  ],
+  "tacas de vidro": [
+    "idiofone",
+    "percussao"
+  ],
+  "tacas tibetanas": [
+    "idiofone",
+    "percussao"
+  ],
+  "tambor": [
+    "membranofone",
+    "percussao"
+  ],
+  "tambor de agua": [
+    "membranofone"
+  ],
+  "tambor de mola": [
+    "membranofone"
+  ],
+  "tambor xamanico": [
+    "membranofone"
+  ],
+  "tambores": [
+    "membranofone"
+  ],
+  "tamboril": [
+    "membranofone",
+    "percussao_tradicional",
+    "tradicional_portugues"
+  ],
+  "tampas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "tampas de panelas": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "tampas dos tachos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "tar": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "tarang": [
+    "idiofone"
+  ],
+  "tarola": [
+    "membranofone",
+    "percussao"
+  ],
+  "tear": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "teclado": [
+    "eletronico",
+    "teclas"
+  ],
+  "tepmeh": [
+    "membranofone"
+  ],
+  "teremim": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "tesouras": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "timbalao": [
+    "membranofone",
+    "percussao"
+  ],
+  "transdutor": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "treculas": [
+    "idiofone",
+    "percussao"
+  ],
+  "triangulo": [
+    "idiofone",
+    "percussao"
+  ],
+  "triquelitraque": [
+    "idiofone",
+    "percussao"
+  ],
+  "trombone": [
+    "aerofone",
+    "metal",
+    "orquestral"
+  ],
+  "trombone baixo": [
+    "aerofone",
+    "metal"
+  ],
+  "trombone tenor": [
+    "aerofone",
+    "metal"
+  ],
+  "trompa": [
+    "aerofone",
+    "metal"
+  ],
+  "trompa do diabo": [
+    "aerofone",
+    "madeira"
+  ],
+  "trompete": [
+    "aerofone",
+    "metal",
+    "orquestral"
+  ],
+  "trompete de varas": [
+    "aerofone",
+    "metal"
+  ],
+  "troncos das arvores": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "tuba": [
+    "aerofone",
+    "metal",
+    "orquestral"
+  ],
+  "tubos": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "udu drum": [
+    "idiofone"
+  ],
+  "ukulele": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "vaca": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "vacas": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "variacao de daf": [
+    "membranofone"
+  ],
+  "varios": [
+    "outros"
+  ],
+  "vassoura": [
+    "objeto",
+    "objetos_domesticos"
+  ],
+  "vento": [
+    "objeto",
+    "objetos_natureza"
+  ],
+  "videoprojector": [
+    "eletronico",
+    "eletronico_digital"
+  ],
+  "viola de arames": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_amarantina": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_arco": [
+    "cordofone",
+    "arco"
+  ],
+  "viola_beiroa": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_braguesa": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_caipira": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_global"
+  ],
+  "viola_campanica": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_da_gamba": [
+    "cordofone",
+    "arco"
+  ],
+  "viola_da_terra": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_de_arame": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_fado": [
+    "cordofone",
+    "dedilhado",
+    "tradicional_portugues"
+  ],
+  "viola_fandangueira": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_generica": [
+    "cordofone",
+    "dedilhado"
+  ],
+  "viola_remaldeira": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_requinta": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "viola_toeira": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "violino": [
+    "cordofone",
+    "arco",
+    "orquestral"
+  ],
+  "violoncelo": [
+    "cordofone",
+    "arco",
+    "orquestral"
+  ],
+  "viviola campanica": [
+    "cordofone",
+    "viola_portuguesa",
+    "tradicional_portugues"
+  ],
+  "voz": [
+    "voz"
+  ],
+  "waterphone": [
+    "idiofone",
+    "percussao"
+  ],
+  "whistle": [
+    "aerofone",
+    "madeira"
+  ],
+  "xilofone": [
+    "idiofone",
+    "lamelas"
+  ],
+  "zamburra": [
+    "membranofone"
+  ]
+}
